@@ -19,16 +19,21 @@ public class Cliente {
 
             switch (opcion) {
                 case 1, 2, 3, 4 -> {
-                    String dato1 =JOptionPane.showInputDialog(null, "Dime un número:", "CLIENTE", JOptionPane.QUESTION_MESSAGE);
-                    enviarDatos(dato1, String.valueOf(opcion));
+                    String dato = JOptionPane.showInputDialog(null, "Dime un número:", "CLIENTE", JOptionPane.QUESTION_MESSAGE);
+                    String numeroDigitosDato = String.valueOf(dato.length());
+
+                    enviarDatos(dato, String.valueOf(opcion), numeroDigitosDato);
                 }
-                case 5 -> System.exit(0);
+                case 5 -> {
+                    enviarDatos("0", String.valueOf(opcion),"0");
+                    System.exit(0);
+                }
             }
         } while (true);
 
     }
 
-    public static void enviarDatos(String dato, String opcion) {
+    public static void enviarDatos(String dato, String opcion, String numeroDigitosDato) {
         try {
             System.out.println("Creando socket cliente");
             Socket clienteSocket = new Socket();
@@ -42,6 +47,7 @@ public class Cliente {
             System.out.println("Enviando dato");
 
             os.write(opcion.getBytes());
+            os.write(numeroDigitosDato.getBytes());
             os.write(dato.getBytes());
 
             System.out.println("Dato enviado");
