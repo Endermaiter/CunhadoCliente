@@ -14,19 +14,21 @@ public class Cliente {
                     1.Equivalente en campos de fútbol
                     2.Meses restantes para la jubilación
                     3.Equivalente en obras de Pérez Reverte
-                    4.Diferenza de prezo coa gasoliñeira mais barata""", "CLIENTE", JOptionPane.QUESTION_MESSAGE));
+                    4.Diferenza de prezo coa gasoliñeira mais barata
+                    5.Sair""", "CLIENTE", JOptionPane.QUESTION_MESSAGE));
 
             switch (opcion) {
                 case 1, 2, 3, 4 -> {
-                    int dato1 = Integer.parseInt(JOptionPane.showInputDialog(null, "Dime un número:", "CLIENTE", JOptionPane.QUESTION_MESSAGE));
-                    enviarDatos(dato1, opcion);
+                    String dato1 =JOptionPane.showInputDialog(null, "Dime un número:", "CLIENTE", JOptionPane.QUESTION_MESSAGE);
+                    enviarDatos(dato1, String.valueOf(opcion));
                 }
+                case 5 -> System.exit(0);
             }
         } while (true);
 
     }
 
-    public static void enviarDatos(int dato, int opcion) {
+    public static void enviarDatos(String dato, String opcion) {
         try {
             System.out.println("Creando socket cliente");
             Socket clienteSocket = new Socket();
@@ -39,8 +41,8 @@ public class Cliente {
 
             System.out.println("Enviando dato");
 
-            os.write(opcion);
-            os.write(dato);
+            os.write(opcion.getBytes());
+            os.write(dato.getBytes());
 
             System.out.println("Dato enviado");
 
