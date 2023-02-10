@@ -3,10 +3,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Cliente {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         do {
             int opcion = Integer.parseInt(JOptionPane.showInputDialog(null, """
@@ -23,9 +24,19 @@ public class Cliente {
                     String numeroDigitosDato = String.valueOf(dato.length());
 
                     enviarDatos(dato, String.valueOf(opcion), numeroDigitosDato);
+
+                    ServerSocket clientSocket = new ServerSocket();
+                    InetSocketAddress addr = new InetSocketAddress("localhost", 5566);
+                    clientSocket.bind(addr);
+                    Socket newSocket = clientSocket.accept();
+                    InputStream is = newSocket.getInputStream();
+                    byte[] arrayDatoDevuelto = new byte[10];
+                    is.read(arrayDatoDevuelto);
+                    System.out.println(new String(arrayDatoDevuelto));
+                    JOptionPane.showMessageDialog(null,"Eso son " + new String(arrayDatoDevuelto) + " campos de fútbol");
                 }
                 case 5 -> {
-                    enviarDatos("0", String.valueOf(opcion),"0");
+                    enviarDatos("0", String.valueOf(opcion), "0");
                     System.exit(0);
                 }
             }
