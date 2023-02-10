@@ -30,10 +30,18 @@ public class Cliente {
                     clientSocket.bind(addr);
                     Socket newSocket = clientSocket.accept();
                     InputStream is = newSocket.getInputStream();
-                    byte[] arrayDatoDevuelto = new byte[10];
+                    byte[] arrayDatoDevuelto = new byte[20];
                     is.read(arrayDatoDevuelto);
-                    System.out.println(new String(arrayDatoDevuelto));
-                    JOptionPane.showMessageDialog(null,"Eso son " + new String(arrayDatoDevuelto) + " campos de fútbol");
+
+                    switch (opcion) {
+                        case 1 -> JOptionPane.showMessageDialog(null, "Eso son " + new String(arrayDatoDevuelto) + " campos de fútbol");
+                        case 2 -> JOptionPane.showMessageDialog(null, "Te quedan " + new String(arrayDatoDevuelto) + " meses para la jubilación con paga completa");
+                        case 3 -> JOptionPane.showMessageDialog(null, "Eso son " + new String(arrayDatoDevuelto) + " obras de Pérez Reverte");
+                        case 4 -> JOptionPane.showMessageDialog(null, "Eso son " + new String(arrayDatoDevuelto) + "€/L mas cara que la gasolinera mas barata de la zona");
+                    }
+
+                    newSocket.close();
+                    clientSocket.close();
                 }
                 case 5 -> {
                     enviarDatos("0", String.valueOf(opcion), "0");
